@@ -71,6 +71,21 @@ http://localhost:8000/api OR IP server
 Stop Gunicorn server or Flask server:
 CTRL+C
 
+---------
+Tested with this versions:
+
+Ubuntu 20.04.1 LTS
+
+Python 3.8.5
+
+Flask 1.1.2
+
+Werkzeug 1.0.1
+
+pip 20.3.3
+
+--------
+
 Trobleshotting:
 
 If has any problem to run Gunicorn server, try:
