@@ -26,7 +26,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 At the moment, is a RESful API with SQLite databases. Built for developers, for testing frontend code.
 
-0.5 Beta version
+Gets full Restful methods for all tables on selected SQLite database. Simple. Fast. Only for development purposes. Not includes security.
+
+0.5 Beta version. Functional.
 
 --------------------------------------
 
