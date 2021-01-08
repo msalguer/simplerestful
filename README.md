@@ -41,6 +41,10 @@ pip --version
 
 pip install Flask
 
+Get the simple RESTFul API application. Select before a folder to install:
+
+wget https://github.com/msalguer/simplerestful/raw/main/app.py && wget https://raw.githubusercontent.com/msalguer/simplerestful/main/app.pyfile
+
 Get SQLite test database.
 
 wget -O Chinook_Sqlite.sqlite https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite?raw=true
@@ -54,7 +58,7 @@ flask run
 
 Execute on Production mode:
 
-flask run -h 192.168.X.X (if possible that not works)
+flask run -h 192.168.X.X -> Python Flask IP WebServer
 
 Execute on Production mode with Gunicorn WGSI Server (4 instances) and receive petitions on all ips available on server:
 
@@ -63,3 +67,15 @@ gunicorn -b 0.0.0.0:8000 -w 4 app:app
 
 Open firewall port (if proceed)
 http://localhost:8000/api OR IP server
+
+Stop Gunicorn server or Flask server:
+CTRL+C
+
+Trobleshotting:
+
+If has any problem to run Gunicorn server, try:
+
+pkill gunicorn
+
+
+
