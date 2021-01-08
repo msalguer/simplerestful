@@ -25,7 +25,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 --------------------------------------------------------
 
 At the moment, is a RESful API with SQLite databases. Built for developers, for testing frontend code.
+
 0.5 Beta version
+
+--------------------------------------
 
 Install RESTFUL API by SoftwareSimple, on Ubuntu/ Debian server:
 
