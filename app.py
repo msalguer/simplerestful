@@ -45,7 +45,7 @@ def api():
 
     print(tablenames)
     
-    res='RESTFUL API by SoftwareSimple<br>'+'<br>'
+    res='SIMPLE RESTFUL - RESTFUL API by SoftwareSimple<br>'+'<br>'
     res+="For development purposes."+'<br><br>'
     res+="Developed by: Manuel Salguero Castell"+'<br>'
     res+="MIT License" +'<br>'
