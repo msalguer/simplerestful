@@ -25,7 +25,7 @@ app = Flask(__name__)
 #+++++++++++++++++++++++++++++++++ SQLite connection method +++++++++++++++++++++++++++++++++++
 bbdd="SQLite"
 def getconn():
-    conn = sqlite3.connect('Chinook_Sqlite.sqlite')
+    conn = sqlite3.connect('./Chinook_Sqlite.sqlite')
     return conn
 
 #+++++++++++++++++++++++++++++++++++++++++ API METHOD ++++++++++++++++++++++++++++++++++++++++++
@@ -64,6 +64,12 @@ def api():
 
     return res
 
+#++++++++++++++++++++++++++++++++++++++++ FAVICON ROUTE (Ignore at the moment) ++++++++++++++++++++++++++
+@app.route('/favicon.ico')
+def favicon():
+    return '' #send_from_directory(os.path.join(app.root_path, 'static'),
+              #                 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 #+++++++++++++++++++++++++++++++++++++++++ GET LIST METHOD ++++++++++++++++++++++++++++++++++++++++++
 @app.route('/<table>',methods=['GET'])
 def getlist(table=None, id=None): 
@@ -93,7 +99,7 @@ def getid(table=None, id=None):
     idfield="".join(map(str,data[0]))
 
     #SELECT - GET ROW
-    c.execute(f'SELECT * FROM {escape(table)} WHERE {idfield}={id}')
+    c.execute(f'SELECT * FROM {escape(table)} WHERE {idfield}={escape(id)}')
     data = c.fetchall()
     print(data)
 
@@ -114,8 +120,8 @@ def addrow(table=None):
         fids=[]
         values=''
         for key,value in req.items():
-            fids.append(key)
-            vals.append(value)
+            fids.append(escape(key))
+            vals.append(escape(value))
 
         #If BBDD is SQlite, ID autonumeric are computed (if proceed)
         idnext=0
@@ -192,13 +198,13 @@ def modifyrow(table=None, id=None):
     idfield="".join(map(str,data[0]))   
     
     #Check if row exists
-    c.execute(f'SELECT * FROM {escape(table)} WHERE {idfield}={id}')
+    c.execute(f'SELECT * FROM {escape(table)} WHERE {idfield}={escape(id)}')
     data = c.fetchall()
     if not data:
     #RESPONSE AND EXIT
         response_body = {
             "result": "Error",
-            "message": f"{idfield} not found: {id}"
+            "message": f"{idfield} not found: {escape(id)}"
         }
         res = make_response(jsonify(response_body), 200)
         return res
@@ -209,8 +215,8 @@ def modifyrow(table=None, id=None):
         values=[]
         fields=[]
         for key,value in req.items():
-            fields.append(key)
-            values.append(value)
+            fields.append(escape(key))
+            values.append(escape(value))
         
         # Build SET for update
         update=''
@@ -223,13 +229,13 @@ def modifyrow(table=None, id=None):
         print (update)
 
         #UPDATE ROW
-        c.execute(f'UPDATE {escape(table)} SET {update} WHERE {idfield}={id}')
+        c.execute(f'UPDATE {escape(table)} SET {update} WHERE {idfield}={escape(id)}')
         conn.commit()
 
         #RESPONSE
         response_body = {
             "result": "OK",
-            "message": f"Row modified. {idfield}:{id}"
+            "message": f"Row modified. {idfield}:{escape(id)}"
         }
         res = make_response(jsonify(response_body), 200)
         return res
@@ -252,25 +258,25 @@ def deleterow(table=None, id=None):
     idfield="".join(map(str,data[0]))
 
     #Check if row exists
-    c.execute(f'SELECT * FROM {escape(table)} WHERE {idfield}={id}')
+    c.execute(f'SELECT * FROM {escape(table)} WHERE {idfield}={escape(id)}')
     data = c.fetchall()
     if not data:
         #RESPONSE AND EXIT
         response_body = {
             "result": "Error",
-            "message": f"{idfield} not found: {id}"
+            "message": f"{idfield} not found: {escape(id)}"
         }
         res = make_response(jsonify(response_body), 200)
         return res
 
     #DELETE
-    c.execute(f'DELETE FROM {escape(table)} WHERE {idfield}={id}')
+    c.execute(f'DELETE FROM {escape(table)} WHERE {idfield}={escape(id)}')
     conn.commit()
 
     #RESPONSE
     response_body = {
         "result": "OK",
-        "message": f"Row deleted: {id}"
+        "message": f"Row deleted: {escape(id)}"
     }
     res = make_response(jsonify(response_body), 200)
     return res
