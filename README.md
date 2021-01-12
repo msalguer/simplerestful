@@ -46,6 +46,8 @@ pip --version
 
 pip install Flask
 
+pip install wget
+
 Get the simple RESTFul API application. Select before a folder to install:
 
 wget https://github.com/msalguer/simplerestful/raw/main/app.py && wget https://raw.githubusercontent.com/msalguer/simplerestful/main/app.pyfile
@@ -104,6 +106,8 @@ HEROKU
 I modified code for get SQLite demo database on Python API. Is not necessary download first SQLite database. Now, you can deploy automatically on Heroku. You can test it here:
 
 https://simplerestful.herokuapp.com/
+
+The first request to the API could be slower, if the Heroku instance was asleep.
 
 LOCAL DEPLOY:
 
