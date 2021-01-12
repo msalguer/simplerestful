@@ -100,8 +100,11 @@ pkill gunicorn
 ----------
 DEPLOY
 
+HEROKU
 I modified code for get SQLite demo database on Python API. Is not necessary download first SQLite database. Now, you can deploy automatically on Heroku. You can test it here:
 
 https://simplerestful.herokuapp.com/
 
+LOCAL DEPLOY:
 
+Disable the wget line of app.py file, so as not to download the SQLite file for all executions because that file will be repeated on the file system.
