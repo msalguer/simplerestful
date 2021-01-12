@@ -67,11 +67,15 @@ def api():
 
     print(tablenames)
     
-    res='SIMPLE RESTFUL - RESTFUL API by SoftwareSimple<br>'+'<br>'
+    res='SIMPLE RESTFUL - RESTFUL API by SoftwareSimple<br>'
+    res+="<a href='https://github.com/msalguer/simplerestful'>https://github.com/msalguer/simplerestful</a>"+'<br>'+'<br>'
     res+="For development purposes."+'<br><br>'
     res+="Developed by: Manuel Salguero Castell"+'<br>'
     res+="MIT License" +'<br>'
     res+="Copyright 2021 - Manuel Salguero Castell"+'<br>'
+    res+="<br>"
+    res+="GitHub SQLite database demo:<br>"
+    res+="<a href='https://github.com/lerocha/chinook-database/tree/master/ChinookDatabase/DataSources'>https://github.com/lerocha/chinook-database/tree/master/ChinookDatabase/DataSources</a>"+'<br>'
     res+="_____________________________<br>"
     res+= '<br>'
     for tablename in tablenames:
