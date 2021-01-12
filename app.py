@@ -32,7 +32,7 @@ def firstconn():
     dbmem = sqlite3.connect(':memory:',check_same_thread=False)
     conn.backup(dbmem)
     return dbmem
-dbmem=''
+dbmem=None
 
 #+++++++++++++++++++++++++++++++++ SQLite connection method +++++++++++++++++++++++++++++++++++
 bbdd="SQLite"
