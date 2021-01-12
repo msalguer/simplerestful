@@ -28,11 +28,11 @@ app = Flask(__name__)
 def firstconn():
     databasefile='Chinook_Sqlite.sqlite'
     wget.download('https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite?raw=true')
-    conn = sqlite3.connect(databasefile)
+    conn = sqlite3.connect(databasefile,check_same_thread=False)
     dbmem = sqlite3.connect(':memory:',check_same_thread=False)
     conn.backup(dbmem)
     return dbmem
-dbmem=firstconn()
+dbmem=''
 
 #+++++++++++++++++++++++++++++++++ SQLite connection method +++++++++++++++++++++++++++++++++++
 bbdd="SQLite"
