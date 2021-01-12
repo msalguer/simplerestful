@@ -20,25 +20,23 @@ import time
 import datetime
 import random
 import os.path
+import wget
 
 app = Flask(__name__)
 
+#For resolve Heroku SQLite problem
+databasefile='Chinook_Sqlite.sqlite'
+wget.download('https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite?raw=true')
+source = sqlite3.connect(databasefile,check_same_thread=False)
+dest = sqlite3.connect(':memory:',check_same_thread=False)
+source.backup(dest)
+
 #+++++++++++++++++++++++++++++++++ SQLite connection method +++++++++++++++++++++++++++++++++++
 bbdd="SQLite"
-def getconn():
-    databasefile='Chinook_Sqlite.sqlite'
-    try:
-        f = open(databasefile)
-    except IOError:
-        print("File not found:"+databasefile+". Downloading...")
-        try:
-            import wget
-            wget.download('https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite?raw=true')
-        except:
-            print("Error!!")
-    finally:
-        f.close()
-    conn = sqlite3.connect(databasefile)
+def getconn():    
+    conn=dest
+    #databasefile='Chinook_Sqlite.sqlite'
+    #conn = sqlite3.connect(databasefile)
     return conn
 
 #+++++++++++++++++++++++++++++++++++++++++ API METHOD ++++++++++++++++++++++++++++++++++++++++++
