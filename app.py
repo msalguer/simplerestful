@@ -20,12 +20,25 @@ import time
 import datetime
 import random
 import os.path
+
 app = Flask(__name__)
 
 #+++++++++++++++++++++++++++++++++ SQLite connection method +++++++++++++++++++++++++++++++++++
 bbdd="SQLite"
 def getconn():
-    conn = sqlite3.connect('./Chinook_Sqlite.sqlite')
+    databasefile='Chinook_Sqlite.sqlite'
+    try:
+        f = open(databasefile)
+    except IOError:
+        print("File not found:"+databasefile+". Downloading...")
+        try:
+            import wget
+            wget.download('https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite?raw=true')
+        except:
+            print("Error!!")
+    finally:
+        f.close()
+    conn = sqlite3.connect(databasefile)
     return conn
 
 #+++++++++++++++++++++++++++++++++++++++++ API METHOD ++++++++++++++++++++++++++++++++++++++++++
