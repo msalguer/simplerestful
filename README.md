@@ -97,5 +97,11 @@ If has any problem to run Gunicorn server, try:
 
 pkill gunicorn
 
+----------
+DEPLOY
+
+I modified code for get SQLite demo database on Python API. Is not necessary download first SQLite database. Now, you can deploy automatically on Heroku. You can test it here:
+
+https://simplerestful.herokuapp.com/
 
 
