@@ -25,16 +25,24 @@ import wget
 app = Flask(__name__)
 
 #For resolve Heroku SQLite problem
-databasefile='Chinook_Sqlite.sqlite'
-wget.download('https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite?raw=true')
-source = sqlite3.connect(databasefile,check_same_thread=False)
-dest = sqlite3.connect(':memory:',check_same_thread=False)
-source.backup(dest)
+def firstconn():
+    databasefile='Chinook_Sqlite.sqlite'
+    wget.download('https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite?raw=true')
+    conn = sqlite3.connect(databasefile)
+    dbmem = sqlite3.connect(':memory:',check_same_thread=False)
+    conn.backup(dbmem)
+    return dbmem
+dbmem=firstconn()
 
 #+++++++++++++++++++++++++++++++++ SQLite connection method +++++++++++++++++++++++++++++++++++
 bbdd="SQLite"
-def getconn():    
-    conn=dest
+def getconn(dbmem):
+    #For resolve Heroku SQLite problem
+    try:
+        c = dbmem.cursor()
+    except:
+        dbmem=firstconn()
+    conn=dbmem    
     #databasefile='Chinook_Sqlite.sqlite'
     #conn = sqlite3.connect(databasefile)
     return conn
@@ -44,7 +52,7 @@ def getconn():
 @app.route('/api',methods=['GET'])
 def api():
     #Get DB cursor
-    conn=getconn()
+    conn=getconn(dbmem)
     c = conn.cursor()
 
     #Get all tablenames 
@@ -85,7 +93,7 @@ def favicon():
 @app.route('/<table>',methods=['GET'])
 def getlist(table=None, id=None): 
     #Get DB cursor
-    conn=getconn()
+    conn=getconn(dbmem)
     c = conn.cursor()
 
     #SELECT - GET ROW LIST
@@ -101,7 +109,7 @@ def getlist(table=None, id=None):
 @app.route('/<table>/<id>',methods=['GET'])
 def getid(table=None, id=None): 
     #Get DB cursor
-    conn=getconn()
+    conn=getconn(dbmem)
     c = conn.cursor()
 
     #Get ID field name 
@@ -121,7 +129,7 @@ def getid(table=None, id=None):
 @app.route('/<table>', methods=['POST'])
 def addrow(table=None):
     #Get DB cursor
-    conn=getconn()
+    conn=getconn(dbmem)
     c = conn.cursor()
 
     #Only processed if receive POST with JSON format
@@ -200,7 +208,7 @@ def addrow(table=None):
 @app.route('/<table>/<id>', methods=['PUT'])
 def modifyrow(table=None, id=None): 
     #Get DB cursor
-    conn=getconn()
+    conn=getconn(dbmem)
     c = conn.cursor()
 
     #Get ID fieldname (first field of table)
@@ -260,7 +268,7 @@ def modifyrow(table=None, id=None):
 @app.route('/<table>/<id>', methods=['DELETE'])
 def deleterow(table=None, id=None): 
     #Get DB cursor
-    conn=getconn()
+    conn=getconn(dbmem)
     c = conn.cursor()
 
     #Get ID fieldname (first field of table)
