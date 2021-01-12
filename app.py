@@ -27,7 +27,10 @@ app = Flask(__name__)
 #For resolve Heroku SQLite problem
 def firstconn():
     databasefile='Chinook_Sqlite.sqlite'
+    #*******************************************************************************************
+    #Disable the following line for local deployment or non-Heroku deployment
     wget.download('https://github.com/lerocha/chinook-database/blob/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite?raw=true')
+    #*******************************************************************************************
     conn = sqlite3.connect(databasefile,check_same_thread=False)
     dbmem = sqlite3.connect(':memory:',check_same_thread=False)
     conn.backup(dbmem)
